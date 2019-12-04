@@ -57,40 +57,10 @@ path_2 <-
 
 path_direction_1 <- substr(path_1, start = 1, stop = 1)
 path_length_1 <- as.numeric(substr(path_1, start = 2, stop = nchar(path_1)))
-#route_1 <- data.frame(x = 0, y = 0)
+route_1 <- data.frame(x = 0, y = 0)
 path_direction_2 <- substr(path_2, start = 1, stop = 1)
 path_length_2 <- as.numeric(substr(path_2, start = 2, stop = nchar(path_2)))
-#route_2 <- data.frame(x = 0, y = 0)
-
-
-
-
-set_math_operator <- function(a, op, b) {
-  foo <- match.fun(FUN = op)
-  return(foo(a, b))
-}
-
-add_new_x_lines <- function(data, row = last_row, length = length, i = i) {
-  x <- seq(data[row, "x"] + 1, data[row, "x"] + length[i], by = 1)
-  y <- rep(data[row, "y"], length(x))
-  rbind(data, data.frame(x = x, y = y))
-}
-
-wire_up <- function(dataframe = data.frame(x = 0, y = 0), direction, length, i) {
-  last_row <- nrow(dataframe)
-  dplyr::case_when(
-    direction[i] == "R" ~ add_new_x_lines(data = dataframe),
-    direction[i] == "L" ~ NA,
-    direction[i] == "U" ~ NA,
-    direction[i] == "D" ~ NA
-  )
-}
-
-
-wire_up(direction = path_direction_1, length = path_length_1, i = 1)
-
-
-
+route_2 <- data.frame(x = 0, y = 0)
 
 for(i in 1:length(path_direction_1)) {
   if(path_direction_1[i] == "R") {
@@ -146,49 +116,16 @@ for(i in 1:length(path_direction_2)) {
   }
 }
 
-#for(i in 1:length(path_direction_2)) {
-#  if(path_direction_2[i] == "R") {
-#    for(j in 1:path_length_2[i]) {
-#      last_row <- nrow(route_2)
-#      route_2[last_row + 1, "x"] <- route_2[last_row, "x"] + 1
-#      route_2[last_row + 1, "y"] <- route_2[last_row, "y"]
-#    }
-#  }
-#  if(path_direction_2[i] == "L") {
-#    for(j in 1:path_length_2[i]) {
-#      last_row <- nrow(route_2)
-#      route_2[last_row + 1, "x"] <- route_2[last_row, "x"] - 1
-#      route_2[last_row + 1, "y"] <- route_2[last_row, "y"]
-#    }
-#  }
-#  if(path_direction_2[i] == "U") {
-#    for(j in 1:path_length_2[i]) {
-#      last_row <- nrow(route_2)
-#      route_2[last_row + 1, "x"] <- route_2[last_row, "x"]
-#      route_2[last_row + 1, "y"] <- route_2[last_row, "y"] + 1
-#    }
-#  }
-#  if(path_direction_2[i] == "D") {
-#    for(j in 1:path_length_2[i]) {
-#      last_row <- nrow(route_2)
-#      route_2[last_row + 1, "x"] <- route_2[last_row, "x"]
-#      route_2[last_row + 1, "y"] <- route_2[last_row, "y"] - 1
-#    }
-#  }
-#}
-
 result <-
   paste(route_1$x, '.', route_1$y)[which(paste(route_1$x, '.', route_1$y) %in% paste(route_2$x, '.', route_2$y))]
 #result <-
 #  paste(route_2$x, '.', route_2$y)[which(paste(route_2$x, '.', route_2$y) %in% paste(route_1$x, '.', route_1$y))]
-#result
 
 result <- lapply(strsplit(result, split = " . "), as.numeric)
 result_part_1 <- result
 result <- lapply(result, abs)
 result <- lapply(result, sum)
 sort(unlist(result))[2]
-
 
 # Part 2 ----------------------------------------------------------------------------------------------------------
 
