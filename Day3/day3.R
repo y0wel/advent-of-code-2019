@@ -1,3 +1,5 @@
+# AoC Day 3 - Part 1 ----------------------------------------------------------------------------------------------
+
 path_1 <-
   c(
     "R1002","D715","R356","D749","L255","U433","L558","D840","R933","U14","L285","U220","L88","D477","R36",
@@ -118,8 +120,6 @@ for(i in 1:length(path_direction_2)) {
 
 result <-
   paste(route_1$x, '.', route_1$y)[which(paste(route_1$x, '.', route_1$y) %in% paste(route_2$x, '.', route_2$y))]
-#result <-
-#  paste(route_2$x, '.', route_2$y)[which(paste(route_2$x, '.', route_2$y) %in% paste(route_1$x, '.', route_1$y))]
 
 result <- lapply(strsplit(result, split = " . "), as.numeric)
 result_part_1 <- result
